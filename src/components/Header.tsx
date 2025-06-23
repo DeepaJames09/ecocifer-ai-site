@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Leaf } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Header = () => {
@@ -19,12 +19,8 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 flex items-center justify-center">
-              <img 
-                src="/ecocifer-logo.png" 
-                alt="Ecocifer Logo" 
-                className="w-8 h-8 object-contain"
-              />
+            <div className="w-8 h-8 rounded-full gradient-eco flex items-center justify-center">
+              <Leaf className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-rounded font-bold text-gray-900">Ecocifer</span>
           </div>
