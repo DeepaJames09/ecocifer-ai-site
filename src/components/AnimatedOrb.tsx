@@ -18,17 +18,17 @@ const OrbitingElements = () => {
     <group ref={groupRef}>
       {/* Small orbiting spheres representing AI nodes */}
       {[...Array(6)].map((_, i) => (
-        <Sphere
+        <mesh
           key={i}
           position={[
             Math.cos((i / 6) * Math.PI * 2) * 3,
             Math.sin((i / 6) * Math.PI * 2) * 3,
             Math.sin((i / 6) * Math.PI * 4) * 1
           ]}
-          args={[0.1, 16, 16]}
         >
+          <sphereGeometry args={[0.1, 16, 16]} />
           <meshStandardMaterial color="#6FCF97" emissive="#6FCF97" emissiveIntensity={0.3} />
-        </Sphere>
+        </mesh>
       ))}
     </group>
   );
@@ -45,10 +45,10 @@ const MainOrb = () => {
   });
 
   return (
-    <Sphere ref={meshRef} args={[1.5, 64, 64]} position={[0, 0, 0]}>
+    <mesh ref={meshRef} position={[0, 0, 0]}>
+      <sphereGeometry args={[1.5, 64, 64]} />
       <MeshDistortMaterial
         color="#27AE60"
-        attach="material"
         distort={0.3}
         speed={2}
         roughness={0.1}
@@ -56,7 +56,7 @@ const MainOrb = () => {
         emissive="#6FCF97"
         emissiveIntensity={0.2}
       />
-    </Sphere>
+    </mesh>
   );
 };
 
