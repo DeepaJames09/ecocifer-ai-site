@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import { motion } from 'framer-motion';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -38,10 +39,28 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-white">
-      <div className="container mx-auto px-4">
+    <section id="contact" className="py-20 bg-white relative overflow-hidden">
+      {/* Animated grid background */}
+      <div className="absolute inset-0 opacity-5">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="1"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16 animate-fade-in">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
             <h2 className="text-4xl md:text-5xl font-rounded font-bold text-gray-900 mb-6">
               Get In Touch
             </h2>
@@ -49,36 +68,49 @@ const ContactSection = () => {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Ready to start your sustainable AI journey? Let's discuss how we can help bring your vision to life.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Information */}
-            <div className="animate-fade-in">
-              <div className="bg-gradient-to-br from-eco-50 to-teal-50 rounded-3xl p-8 h-full">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <div className="glassmorphism bg-gradient-to-br from-eco-50/80 to-teal-50/80 rounded-3xl p-8 h-full backdrop-blur-sm border border-eco-200/50">
                 <h3 className="text-2xl font-rounded font-bold text-gray-900 mb-8">
                   Let's Connect
                 </h3>
 
                 <div className="space-y-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 gradient-eco rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <motion.div 
+                    className="flex items-start space-x-4"
+                    whileHover={{ x: 10 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <div className="w-12 h-12 gradient-eco rounded-2xl flex items-center justify-center flex-shrink-0 pulse-glow">
                       <Mail className="w-6 h-6 text-white" />
                     </div>
                     <div>
                       <h4 className="font-semibold text-gray-900 mb-1">Email Us</h4>
                       <p className="text-gray-600">hello@ecocifer.ai</p>
                     </div>
-                  </div>
+                  </motion.div>
 
-                  <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 gradient-eco rounded-2xl flex items-center justify-center flex-shrink-0">
+                  <motion.div 
+                    className="flex items-start space-x-4"
+                    whileHover={{ x: 10 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <div className="w-12 h-12 gradient-eco rounded-2xl flex items-center justify-center flex-shrink-0 pulse-glow">
                       <MapPin className="w-6 h-6 text-white" />
                     </div>
                     <div>
                       <h4 className="font-semibold text-gray-900 mb-1">Location</h4>
                       <p className="text-gray-600">Toronto, Canada</p>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
 
                 <div className="mt-8 pt-8 border-t border-eco-200">
@@ -90,25 +122,40 @@ const ContactSection = () => {
                       "Proven industry expertise",
                       "Collaborative partnership model"
                     ].map((item, index) => (
-                      <div key={index} className="flex items-center space-x-3">
+                      <motion.div 
+                        key={index} 
+                        className="flex items-center space-x-3"
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 + 0.5, duration: 0.5 }}
+                        viewport={{ once: true }}
+                      >
                         <CheckCircle className="w-5 h-5 text-eco-600 flex-shrink-0" />
                         <span className="text-gray-700">{item}</span>
-                      </div>
+                      </motion.div>
                     ))}
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Contact Form */}
-            <div className="animate-fade-in">
-              <form onSubmit={handleSubmit} className="bg-white rounded-3xl p-8 shadow-lg border border-eco-100">
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              viewport={{ once: true }}
+            >
+              <form onSubmit={handleSubmit} className="glassmorphism bg-white/90 rounded-3xl p-8 shadow-xl border border-eco-100/50 backdrop-blur-sm">
                 <h3 className="text-2xl font-rounded font-bold text-gray-900 mb-6">
                   Send us a message
                 </h3>
 
                 <div className="space-y-6">
-                  <div>
+                  <motion.div
+                    whileFocus={{ scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                       Full Name
                     </label>
@@ -119,12 +166,15 @@ const ContactSection = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full rounded-xl border-eco-200 focus:border-eco-500 focus:ring-eco-500"
+                      className="w-full rounded-xl border-eco-200 focus:border-eco-500 focus:ring-eco-500 glassmorphism bg-white/50"
                       placeholder="Enter your full name"
                     />
-                  </div>
+                  </motion.div>
 
-                  <div>
+                  <motion.div
+                    whileFocus={{ scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                       Email Address
                     </label>
@@ -135,12 +185,15 @@ const ContactSection = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full rounded-xl border-eco-200 focus:border-eco-500 focus:ring-eco-500"
+                      className="w-full rounded-xl border-eco-200 focus:border-eco-500 focus:ring-eco-500 glassmorphism bg-white/50"
                       placeholder="Enter your email address"
                     />
-                  </div>
+                  </motion.div>
 
-                  <div>
+                  <motion.div
+                    whileFocus={{ scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
                     <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
                       Message
                     </label>
@@ -151,31 +204,36 @@ const ContactSection = () => {
                       onChange={handleChange}
                       required
                       rows={6}
-                      className="w-full rounded-xl border-eco-200 focus:border-eco-500 focus:ring-eco-500 resize-none"
+                      className="w-full rounded-xl border-eco-200 focus:border-eco-500 focus:ring-eco-500 resize-none glassmorphism bg-white/50"
                       placeholder="Tell us about your project or inquiry..."
                     />
-                  </div>
+                  </motion.div>
 
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full gradient-eco text-white hover:opacity-90 transition-all duration-300 rounded-xl py-3 font-medium shadow-lg hover:shadow-xl"
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    {isSubmitting ? (
-                      <div className="flex items-center justify-center space-x-2">
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        <span>Sending...</span>
-                      </div>
-                    ) : (
-                      <div className="flex items-center justify-center space-x-2">
-                        <span>Send Message</span>
-                        <Send className="w-4 h-4" />
-                      </div>
-                    )}
-                  </Button>
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full gradient-eco text-white hover:opacity-90 transition-all duration-300 rounded-xl py-3 font-medium shadow-lg hover:shadow-xl pulse-glow"
+                    >
+                      {isSubmitting ? (
+                        <div className="flex items-center justify-center space-x-2">
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          <span>Sending...</span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center justify-center space-x-2">
+                          <span>Send Message</span>
+                          <Send className="w-4 h-4" />
+                        </div>
+                      )}
+                    </Button>
+                  </motion.div>
                 </div>
               </form>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
