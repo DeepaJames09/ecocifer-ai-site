@@ -14,7 +14,7 @@ const Footer = () => {
               <div className="flex items-center space-x-2 mb-4">
                 <div className="w-12 h-12 flex items-center justify-center">
                   <img 
-                    src="logo.png" 
+                    src="logo_dark.png" 
                     alt="Ecocifer Logo" 
                     className="w-12 h-12 object-contain"
                   />
