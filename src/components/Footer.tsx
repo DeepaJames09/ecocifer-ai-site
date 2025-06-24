@@ -16,7 +16,7 @@ const Footer = () => {
                   <img 
                     src="logo.png" 
                     alt="Ecocifer Logo" 
-                    className="w-8 h-8 object-contain brightness-0 invert"
+                    className="w-8 h-8 object-contain"
                   />
                 </div>
               </div>
