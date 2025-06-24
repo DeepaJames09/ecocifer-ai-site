@@ -26,7 +26,6 @@ const Header = () => {
                 className="w-8 h-8 object-contain"
               />
             </div>
-            <span className="text-xl font-rounded font-bold text-gray-900">Ecocifer</span>
           </div>
 
           {/* Desktop Navigation */}
