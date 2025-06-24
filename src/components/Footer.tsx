@@ -12,11 +12,11 @@ const Footer = () => {
             {/* Brand */}
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <div className="w-12 h-12 flex items-center justify-center">
+                <div className="w-16 h-16 flex items-center justify-center">
                   <img 
                     src="logo_dark.png" 
                     alt="Ecocifer Logo" 
-                    className="w-12 h-12 object-contain"
+                    className="w-16 h-16 object-contain"
                   />
                 </div>
               </div>
