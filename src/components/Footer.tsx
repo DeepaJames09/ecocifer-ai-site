@@ -1,5 +1,5 @@
 
-import { Leaf, Mail, MapPin } from 'lucide-react';
+import { Mail, MapPin } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -12,8 +12,12 @@ const Footer = () => {
             {/* Brand */}
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 rounded-full gradient-eco flex items-center justify-center">
-                  <Leaf className="w-5 h-5 text-white" />
+                <div className="w-8 h-8 flex items-center justify-center">
+                  <img 
+                    src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=2560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                    alt="Ecocifer Logo" 
+                    className="w-8 h-8 object-contain brightness-0 invert"
+                  />
                 </div>
                 <span className="text-xl font-rounded font-bold">Ecocifer</span>
               </div>
