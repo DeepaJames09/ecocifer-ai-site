@@ -94,7 +94,7 @@ const ContactSection = () => {
                     </div>
                     <div>
                       <h4 className="font-semibold text-gray-900 mb-1">Email Us</h4>
-                      <p className="text-gray-600">hello@ecocifer.ai</p>
+                      <p className="text-gray-600">contact@ecocifer.com</p>
                     </div>
                   </motion.div>
 
