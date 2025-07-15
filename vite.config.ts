@@ -12,9 +12,6 @@ export default defineConfig(({ mode }) => ({
     middlewareMode: false,
     fs: {
       strict: false
-    },
-    headers: {
-      'Content-Type': 'text/javascript; charset=utf-8'
     }
   },
   build: {
@@ -23,8 +20,7 @@ export default defineConfig(({ mode }) => ({
         format: 'es',
         entryFileNames: '[name].[hash].js',
         chunkFileNames: '[name].[hash].js',
-        assetFileNames: '[name].[hash].[ext]',
-        manualChunks: undefined
+        assetFileNames: '[name].[hash].[ext]'
       }
     },
     target: 'esnext',
