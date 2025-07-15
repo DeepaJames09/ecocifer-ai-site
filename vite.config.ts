@@ -12,6 +12,9 @@ export default defineConfig(({ mode }) => ({
     middlewareMode: false,
     fs: {
       strict: false
+    },
+    headers: {
+      'Content-Type': 'text/javascript; charset=utf-8'
     }
   },
   build: {
@@ -20,19 +23,21 @@ export default defineConfig(({ mode }) => ({
         format: 'es',
         entryFileNames: '[name].[hash].js',
         chunkFileNames: '[name].[hash].js',
-        assetFileNames: '[name].[hash].[ext]'
+        assetFileNames: '[name].[hash].[ext]',
+        manualChunks: undefined
       }
     },
     target: 'esnext',
-    minify: 'esbuild'
+    minify: 'esbuild',
+    sourcemap: false
   },
   esbuild: {
-    target: 'esnext'
+    target: 'esnext',
+    format: 'esm'
   },
   plugins: [
     react(),
-    mode === 'development' &&
-    componentTagger(),
+    mode === 'development' && componentTagger(),
   ].filter(Boolean),
   resolve: {
     alias: {
@@ -40,6 +45,12 @@ export default defineConfig(({ mode }) => ({
     },
   },
   optimizeDeps: {
-    include: ['react', 'react-dom']
+    include: ['react', 'react-dom'],
+    esbuildOptions: {
+      target: 'esnext'
+    }
+  },
+  define: {
+    'process.env.NODE_ENV': JSON.stringify(mode)
   }
 }));
