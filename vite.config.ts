@@ -17,10 +17,9 @@ export default defineConfig(({ mode }) => ({
   build: {
     rollupOptions: {
       output: {
-        format: 'es',
-        entryFileNames: '[name].[hash].js',
-        chunkFileNames: '[name].[hash].js',
-        assetFileNames: '[name].[hash].[ext]'
+        entryFileNames: '[name]-[hash].js',
+        chunkFileNames: '[name]-[hash].js',
+        assetFileNames: '[name]-[hash].[ext]'
       }
     },
     target: 'esnext',
@@ -28,8 +27,7 @@ export default defineConfig(({ mode }) => ({
     sourcemap: false
   },
   esbuild: {
-    target: 'esnext',
-    format: 'esm'
+    target: 'esnext'
   },
   plugins: [
     react(),
@@ -41,12 +39,6 @@ export default defineConfig(({ mode }) => ({
     },
   },
   optimizeDeps: {
-    include: ['react', 'react-dom'],
-    esbuildOptions: {
-      target: 'esnext'
-    }
-  },
-  define: {
-    'process.env.NODE_ENV': JSON.stringify(mode)
+    include: ['react', 'react-dom']
   }
 }));
