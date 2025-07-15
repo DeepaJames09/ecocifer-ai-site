@@ -9,16 +9,25 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    headers: {
-      'Content-Type': 'application/javascript; charset=utf-8'
+    middlewareMode: false,
+    fs: {
+      strict: false
     }
   },
   build: {
     rollupOptions: {
       output: {
-        format: 'es'
+        format: 'es',
+        entryFileNames: '[name].[hash].js',
+        chunkFileNames: '[name].[hash].js',
+        assetFileNames: '[name].[hash].[ext]'
       }
-    }
+    },
+    target: 'esnext',
+    minify: 'esbuild'
+  },
+  esbuild: {
+    target: 'esnext'
   },
   plugins: [
     react(),
@@ -30,4 +39,7 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  optimizeDeps: {
+    include: ['react', 'react-dom']
+  }
 }));
