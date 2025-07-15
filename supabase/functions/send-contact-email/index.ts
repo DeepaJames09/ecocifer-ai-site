@@ -51,7 +51,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send email notification to your team
     const teamEmailResponse = await resend.emails.send({
-      from: "Contact Form <onboarding@resend.dev>", // You'll need to change this to your verified domain
+      from: "Contact Form <contact@ecocifer.com>", // Updated to use your verified domain
       to: ["contact@ecocifer.com"], // Replace with your actual email
       subject: `New Contact Form Submission from ${name}`,
       html: `
@@ -69,7 +69,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send confirmation email to the user
     const userEmailResponse = await resend.emails.send({
-      from: "Ecocifer <onboarding@resend.dev>", // You'll need to change this to your verified domain
+      from: "Ecocifer <contact@ecocifer.com>", // Updated to use your verified domain
       to: [email],
       subject: "Thank you for contacting Ecocifer!",
       html: `
