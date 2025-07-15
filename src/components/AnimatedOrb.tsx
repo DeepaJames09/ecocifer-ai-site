@@ -1,7 +1,6 @@
 
 import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Sphere, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 
 const FloatingOrb = () => {
@@ -16,25 +15,32 @@ const FloatingOrb = () => {
   });
 
   return (
-    <Sphere ref={meshRef} args={[1, 100, 200]} scale={2.5}>
-      <MeshDistortMaterial
+    <mesh ref={meshRef} scale={2.5}>
+      <sphereGeometry args={[1, 64, 64]} />
+      <meshStandardMaterial
         color="#22c55e"
-        attach="material"
-        distort={0.3}
-        speed={1}
-        roughness={0.4}
+        roughness={0.2}
         metalness={0.8}
+        emissive="#0f4f3c"
+        emissiveIntensity={0.1}
       />
-    </Sphere>
+    </mesh>
   );
 };
 
 const AnimatedOrb = () => {
   return (
     <div className="w-full h-96 relative">
-      <Canvas camera={{ position: [0, 0, 5] }}>
+      <Canvas 
+        camera={{ position: [0, 0, 5] }}
+        gl={{ antialias: true, alpha: true }}
+        onCreated={({ gl }) => {
+          gl.setClearColor('#ffffff', 0);
+        }}
+      >
         <ambientLight intensity={0.6} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
+        <pointLight position={[10, 10, 5]} intensity={1} />
+        <directionalLight position={[-10, -10, -5]} intensity={0.5} />
         <FloatingOrb />
       </Canvas>
     </div>
