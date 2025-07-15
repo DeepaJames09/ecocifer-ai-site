@@ -1,6 +1,7 @@
 
 import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
+import { Sphere, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 
 const FloatingOrb = () => {
@@ -15,14 +16,16 @@ const FloatingOrb = () => {
   });
 
   return (
-    <mesh ref={meshRef} scale={2.5}>
-      <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial
+    <Sphere ref={meshRef} args={[1, 100, 200]} scale={2.5}>
+      <MeshDistortMaterial
         color="#22c55e"
+        attach="material"
+        distort={0.3}
+        speed={1}
         roughness={0.4}
         metalness={0.8}
       />
-    </mesh>
+    </Sphere>
   );
 };
 
