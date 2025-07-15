@@ -1,28 +1,60 @@
 
 import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
+import { Sphere, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 
-const FloatingOrb = () => {
-  const meshRef = useRef<THREE.Mesh>(null);
+const OrbitingElements = () => {
+  const groupRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime) * 0.3;
-      meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.5;
-      meshRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.8) * 0.2;
+    if (groupRef.current) {
+      groupRef.current.rotation.y = state.clock.elapsedTime * 0.5;
+      groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.1;
     }
   });
 
   return (
-    <mesh ref={meshRef} scale={2.5}>
-      <sphereGeometry args={[1, 64, 64]} />
-      <meshStandardMaterial
-        color="#22c55e"
-        roughness={0.2}
+    <group ref={groupRef}>
+      {/* Small orbiting spheres representing AI nodes */}
+      {[...Array(6)].map((_, i) => (
+        <mesh
+          key={i}
+          position={[
+            Math.cos((i / 6) * Math.PI * 2) * 3,
+            Math.sin((i / 6) * Math.PI * 2) * 3,
+            Math.sin((i / 6) * Math.PI * 4) * 1
+          ]}
+        >
+          <sphereGeometry args={[0.1, 16, 16]} />
+          <meshStandardMaterial color="#6FCF97" emissive="#6FCF97" emissiveIntensity={0.3} />
+        </mesh>
+      ))}
+    </group>
+  );
+};
+
+const MainOrb = () => {
+  const meshRef = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.x = state.clock.elapsedTime * 0.2;
+      meshRef.current.rotation.y = state.clock.elapsedTime * 0.3;
+    }
+  });
+
+  return (
+    <mesh ref={meshRef} position={[0, 0, 0]}>
+      <sphereGeometry args={[1.5, 64, 64]} />
+      <MeshDistortMaterial
+        color="#27AE60"
+        distort={0.3}
+        speed={2}
+        roughness={0.1}
         metalness={0.8}
-        emissive="#0f4f3c"
-        emissiveIntensity={0.1}
+        emissive="#6FCF97"
+        emissiveIntensity={0.2}
       />
     </mesh>
   );
@@ -31,17 +63,13 @@ const FloatingOrb = () => {
 const AnimatedOrb = () => {
   return (
     <div className="w-full h-96 relative">
-      <Canvas 
-        camera={{ position: [0, 0, 5] }}
-        gl={{ antialias: true, alpha: true }}
-        onCreated={({ gl }) => {
-          gl.setClearColor('#ffffff', 0);
-        }}
-      >
-        <ambientLight intensity={0.6} />
-        <pointLight position={[10, 10, 5]} intensity={1} />
-        <directionalLight position={[-10, -10, -5]} intensity={0.5} />
-        <FloatingOrb />
+      <Canvas camera={{ position: [0, 0, 6], fov: 60 }}>
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[10, 10, 5]} intensity={1} />
+        <pointLight position={[-10, -10, -5]} intensity={0.5} color="#00BFA5" />
+        
+        <MainOrb />
+        <OrbitingElements />
       </Canvas>
     </div>
   );
