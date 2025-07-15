@@ -1,6 +1,5 @@
 
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { Resend } from "npm:resend@2.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
@@ -26,32 +25,9 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const { name, email, message }: ContactEmailRequest = await req.json();
 
-    // Initialize Supabase client
-    const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? ''
-    );
-
-    // Store the contact submission in the database
-    const { data, error: dbError } = await supabaseClient
-      .from('contact_submissions')
-      .insert({
-        name,
-        email,
-        message,
-        status: 'pending'
-      })
-      .select()
-      .single();
-
-    if (dbError) {
-      console.error('Database error:', dbError);
-      throw new Error('Failed to store contact submission');
-    }
-
     // Send email notification to your team
     const teamEmailResponse = await resend.emails.send({
-      from: "Contact Form <contact@ecocifer.com>", // Updated to use your verified domain
+      from: "Contact Form <contact@ecocifer.com>",
       to: ["contact@ecocifer.com"], // Replace with your actual email
       subject: `New Contact Form Submission from ${name}`,
       html: `
@@ -63,13 +39,12 @@ const handler = async (req: Request): Promise<Response> => {
           ${message.replace(/\n/g, '<br>')}
         </div>
         <p><strong>Submitted at:</strong> ${new Date().toLocaleString()}</p>
-        <p><strong>Submission ID:</strong> ${data.id}</p>
       `,
     });
 
     // Send confirmation email to the user
     const userEmailResponse = await resend.emails.send({
-      from: "Ecocifer <contact@ecocifer.com>", // Updated to use your verified domain
+      from: "Ecocifer <contact@ecocifer.com>",
       to: [email],
       subject: "Thank you for contacting Ecocifer!",
       html: `
@@ -98,18 +73,11 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
-    // Update the submission status to processed
-    await supabaseClient
-      .from('contact_submissions')
-      .update({ status: 'processed' })
-      .eq('id', data.id);
-
     console.log("Emails sent successfully:", { teamEmailResponse, userEmailResponse });
 
     return new Response(JSON.stringify({ 
       success: true, 
-      message: "Contact form submitted and emails sent successfully",
-      id: data.id 
+      message: "Contact form submitted and emails sent successfully"
     }), {
       status: 200,
       headers: {
